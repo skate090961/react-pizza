@@ -1,8 +1,12 @@
 import React from 'react';
-import './App.css';
+import './assets/styles/scss/app.scss'
+import {Layout} from "./components/Layout/Layout";
+import {Pages} from "./components/Pages/Pages";
 
 export const App = () => {
-  return (
-      <div>1</div>
-  )
+    return (
+        <Layout>
+            <Pages />
+        </Layout>
+    )
 }
