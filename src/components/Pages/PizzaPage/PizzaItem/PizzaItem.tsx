@@ -1,25 +1,33 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {AddButton} from "./AddButton/AddButton";
+import {PizzaType} from "../PizzaPage";
+import {Selector} from "./Selector/Selector";
 
-export const PizzaItem = () => {
+type PizzaItemPropsType = {
+    pizza: PizzaType
+}
+
+export const PizzaItem: React.FC<PizzaItemPropsType> = ({pizza}) => {
+    const [typeActive, setTypeActive] = useState<number>(0)
+    const [sizeActive, setSizeActive] = useState<number>(0)
+
+    const {id, price, rating, sizes, title, types, imageUrl, category} = pizza
+
+    const pizzaAllTypes = ['тонкое', 'традиционное']
+    const pizzaTypes = types.map(t => pizzaAllTypes[t])
+    const pizzaSizes = sizes.map(s => `${s} см.`)
+
     return (
         <div className="pizza-block">
             <img
                 className="pizza-block__image"
-                src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-                alt="Pizza"
+                src={imageUrl}
+                alt={title}
             />
-            <h4 className="pizza-block__title">Чизбургер-пицца</h4>
+            <h4 className="pizza-block__title">{title}</h4>
             <div className="pizza-block__selector">
-                <ul>
-                    <li className="active">тонкое</li>
-                    <li>традиционное</li>
-                </ul>
-                <ul>
-                    <li className="active">26 см.</li>
-                    <li>30 см.</li>
-                    <li>40 см.</li>
-                </ul>
+                <Selector onChange={setTypeActive} activeIndex={typeActive} values={pizzaTypes}/>
+                <Selector onChange={setSizeActive} activeIndex={sizeActive} values={pizzaSizes}/>
             </div>
             <div className="pizza-block__bottom">
                 <div className="pizza-block__price">от 395 ₽</div>

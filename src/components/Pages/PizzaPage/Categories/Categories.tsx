@@ -1,16 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {Selector} from "../PizzaItem/Selector/Selector";
 
 export const Categories = () => {
+    const [activeCategory, setActiveCategory] = useState<number>(0)
+    const categories = ['Все', 'Мясные', 'Вегетарианские', 'Гриль', 'Острые', 'Закрытые']
+
     return (
         <div className="categories">
-            <ul>
-                <li className="active">Все</li>
-                <li>Мясные</li>
-                <li>Вегетарианская</li>
-                <li>Гриль</li>
-                <li>Острые</li>
-                <li>Закрытые</li>
-            </ul>
+            <Selector onChange={setActiveCategory} activeIndex={activeCategory} values={categories} />
         </div>
     );
 };
