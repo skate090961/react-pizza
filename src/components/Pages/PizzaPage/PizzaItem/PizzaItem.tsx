@@ -18,20 +18,22 @@ export const PizzaItem: React.FC<PizzaItemPropsType> = ({pizza}) => {
     const pizzaSizes = sizes.map(s => `${s} см.`)
 
     return (
-        <div className="pizza-block">
-            <img
-                className="pizza-block__image"
-                src={imageUrl}
-                alt={title}
-            />
-            <h4 className="pizza-block__title">{title}</h4>
-            <div className="pizza-block__selector">
-                <Selector onChange={setTypeActive} activeIndex={typeActive} values={pizzaTypes}/>
-                <Selector onChange={setSizeActive} activeIndex={sizeActive} values={pizzaSizes}/>
-            </div>
-            <div className="pizza-block__bottom">
-                <div className="pizza-block__price">от 395 ₽</div>
-                <AddButton/>
+        <div className={"pizza-block-wrapper"}>
+            <div className="pizza-block">
+                <img
+                    className="pizza-block__image"
+                    src={imageUrl}
+                    alt={title}
+                />
+                <h4 className="pizza-block__title">{title}</h4>
+                <div className="pizza-block__selector">
+                    <Selector onChange={setTypeActive} activeIndex={typeActive} values={pizzaTypes}/>
+                    <Selector onChange={setSizeActive} activeIndex={sizeActive} values={pizzaSizes}/>
+                </div>
+                <div className="pizza-block__bottom">
+                    <div className="pizza-block__price">от 395 ₽</div>
+                    <AddButton/>
+                </div>
             </div>
         </div>
     );

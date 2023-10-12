@@ -4,17 +4,34 @@
   border-bottom: 1px solid $gray-line;
   padding: 40px 0;
 
+  @media (max-width: 650px) {
+    padding-bottom: 0;
+  }
+
   .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    
+    @media (max-width: 650px) {
+      flex-direction: column;
+      gap: 20px;
+    }
   }
 
   &__logo {
     display: flex;
 
+    @media (max-width: 650px) {
+      text-align: center;
+      flex-direction: row;
+    }
+
     img {
       margin-right: 15px;
+      @media (max-width: 650px) {
+        width: 30px;
+      }
     }
 
     h1 {
@@ -27,6 +44,10 @@
 
     p {
       color: #7b7b7b;
+
+      @media (max-width: 650px) {
+        display: none;
+      }
     }
   }
 }
