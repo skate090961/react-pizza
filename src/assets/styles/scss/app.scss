@@ -281,6 +281,16 @@ body {
     h2 {
       font-size: 32px;
       margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+
+      img {
+        width: 30px;
+        display: inline;
+        margin: 0;
+      }
     }
 
     p {
