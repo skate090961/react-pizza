@@ -10,8 +10,10 @@ export const Layout: React.FC<LayoutType> = ({
                                              }) => {
     return (
         <div className="wrapper">
-            <Header />
-            {children}
+            <Header/>
+            <div className="content">
+                {children}
+            </div>
         </div>
     );
 };

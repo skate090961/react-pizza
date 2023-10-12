@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Categories} from "./Categories/Categories";
 import {Sort} from "./Sort/Sort";
 import {PizzaItem} from "./PizzaItem/PizzaItem";
-import pizzas from '../../../assets/pizzas.json'
+import {PizzaSkeleton} from "./PizzaItem/PizzaSkeleton";
 
 export type PizzaType = {
     id: number
@@ -16,15 +16,26 @@ export type PizzaType = {
 }
 
 export const PizzaPage = () => {
-    const pizzasList = pizzas.map(p =>
-        <PizzaItem
-            key={p.id}
-            pizza={p}
-        />
-    )
+    const [isLoading, setIsLoading] = useState<boolean>(true)
+
+    useEffect(() => {
+        fetch('https://65268109917d673fd76c6aa4.mockapi.io/items')
+            .then(res => {
+                return res.json()
+            })
+            .then(arr => {
+                setItems(arr)
+                setIsLoading(false)
+            })
+
+    }, [])
+
+    const [items, setItems] = useState<PizzaType[]>([])
+    const itemsList = items.map(i => <PizzaItem key={i.id} pizza={i}/>)
+    const skeletonItemsList = [...new Array(6)].map((_, index) => <PizzaSkeleton key={index}/>)
+    const loadedList = isLoading ? skeletonItemsList : itemsList
 
     return (
-        <div className="content">
             <div className="container">
                 <div className="content__top">
                     <Categories/>
@@ -32,9 +43,8 @@ export const PizzaPage = () => {
                 </div>
                 <h2 className="content__title">Все пиццы</h2>
                 <div className="content__items">
-                    {pizzasList}
+                    {loadedList}
                 </div>
             </div>
-        </div>
     );
 };

@@ -60,6 +60,7 @@ body {
     display: flex;
     align-items: center;
     font-size: 32px;
+    font-weight: 600;
 
     svg {
       position: relative;
@@ -254,7 +255,7 @@ body {
           }
         }
 
-        svg {
+        img {
           margin-right: 12px;
           path {
             fill: transparent;

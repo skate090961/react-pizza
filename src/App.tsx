@@ -1,12 +1,15 @@
 import React from 'react';
 import './assets/styles/scss/app.scss'
-import {Layout} from "./components/Layout/Layout";
 import {Pages} from "./components/Pages/Pages";
+import {BrowserRouter} from "react-router-dom";
+import {Layout} from "./components/Layout/Layout";
 
 export const App = () => {
     return (
-        <Layout>
-            <Pages />
-        </Layout>
+        <BrowserRouter>
+            <Layout>
+                <Pages/>
+            </Layout>
+        </BrowserRouter>
     )
 }

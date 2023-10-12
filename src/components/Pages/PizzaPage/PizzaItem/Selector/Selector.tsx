@@ -1,32 +1,36 @@
 import React from 'react';
 
 type SelectorPropsType = {
-    onChange: (index: number) => void
-    activeIndex: number
     values: Array<string>
+    activeIndex: number
+    onChange: (activeIndex: number) => void
 }
 
 export const Selector: React.FC<SelectorPropsType> = ({
-                                                          onChange,
+                                                          values,
                                                           activeIndex,
-                                                          values
+                                                          onChange
                                                       }) => {
-    const changeIndexHandler = (index: number) => {
-        index !== activeIndex && onChange(index)
-    }
-    const addClassActive = (index: number) => {
-        return index === activeIndex ? 'active' : ''
+
+    const changeSelectHandler = (index: number) => {
+        activeIndex !== index && onChange(index)
     }
 
-    const selectorItems = values.map((value, index) => (
+    const addActiveClass = (index: number) => {
+        return activeIndex === index ? 'active' : ''
+    }
+
+    const selectorList = values.map((value, index) =>
         <li
             key={value}
-            className={addClassActive(index)}
-            onClick={() => changeIndexHandler(index)}
-        >
-            {value}
-        </li>
-    ))
+            onClick={() => changeSelectHandler(index)}
+            className={addActiveClass(index)}
+        >{value}</li>
+    )
 
-    return <ul>{selectorItems}</ul>
-};
+    return (
+        <ul>
+            {selectorList}
+        </ul>
+    )
+}
