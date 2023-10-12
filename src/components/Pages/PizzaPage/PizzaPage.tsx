@@ -27,7 +27,7 @@ export const PizzaPage = () => {
                 setItems(arr)
                 setIsLoading(false)
             })
-
+        window.scrollTo(0, 0)
     }, [])
 
     const [items, setItems] = useState<PizzaType[]>([])
@@ -36,15 +36,15 @@ export const PizzaPage = () => {
     const loadedList = isLoading ? skeletonItemsList : itemsList
 
     return (
-            <div className="container">
-                <div className="content__top">
-                    <Categories/>
-                    <Sort/>
-                </div>
-                <h2 className="content__title">Все пиццы</h2>
-                <div className="content__items">
-                    {loadedList}
-                </div>
+        <div className="container">
+            <div className="content__top">
+                <Categories/>
+                <Sort/>
             </div>
+            <h2 className="content__title">Все пиццы</h2>
+            <div className="content__items">
+                {loadedList}
+            </div>
+        </div>
     );
 };
