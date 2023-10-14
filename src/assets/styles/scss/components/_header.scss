@@ -8,11 +8,23 @@
     padding-bottom: 0;
   }
 
+  &__logo_search {
+    display: flex;
+    align-items: flex-end;
+    gap: 50px;
+  }
+
   .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
+    flex-wrap: wrap;
+    gap: 20px;
+
+    @media (max-width: 1151px) {
+      justify-content: center;
+    }
+
     @media (max-width: 650px) {
       flex-direction: column;
       gap: 20px;

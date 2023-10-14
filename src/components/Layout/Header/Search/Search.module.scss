@@ -1,0 +1,41 @@
+.search {
+  position: relative;
+
+  input {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 8px 40px;
+    width: 400px;
+    border-radius: 12px;
+    font-size: 16px;
+
+    @media (max-width: 485px) {
+      width: 300px;
+    }
+
+    &:focus {
+      outline: 1px solid rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  img {
+    width: 25px;
+    opacity: 0.3;
+    position: absolute;
+
+    &.search_icon {
+      left: 10px;
+      top: 7px;
+    }
+
+    &.close_icon {
+      right: 10px;
+      top: 7px;
+
+      &:hover {
+        cursor: pointer;
+        opacity: 0.7;
+      }
+    }
+  }
+}
+

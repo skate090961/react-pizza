@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {AddButton} from "./AddButton/AddButton";
-import {PizzaType} from "../PizzaPage";
 import {Selector} from "./Selector/Selector";
+import {PizzaType} from "../../Pages";
 
 type PizzaItemPropsType = {
     pizza: PizzaType
@@ -31,7 +31,7 @@ export const PizzaItem: React.FC<PizzaItemPropsType> = ({pizza}) => {
                     <Selector onChange={setSizeActive} activeIndex={sizeActive} values={pizzaSizes}/>
                 </div>
                 <div className="pizza-block__bottom">
-                    <div className="pizza-block__price">от 395 ₽</div>
+                    <div className="pizza-block__price">{`от ${price} ₽`}</div>
                     <AddButton/>
                 </div>
             </div>

@@ -6,7 +6,7 @@ type LayoutType = {
 }
 
 export const Layout: React.FC<LayoutType> = ({
-                                                 children
+                                                 children,
                                              }) => {
     return (
         <div className="wrapper">

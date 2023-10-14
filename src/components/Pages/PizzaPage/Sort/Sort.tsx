@@ -3,9 +3,16 @@ import arrowUp from '../../../../assets/img/arrow-top.svg'
 import arrowDown from '../../../../assets/img/arrow-down.svg'
 import {Selector} from "../PizzaItem/Selector/Selector";
 
-export const Sort = () => {
+type SortPropsType = {
+    selected: number
+    setSelected: (selected: number) => void
+}
+
+export const Sort: React.FC<SortPropsType> = ({
+                                                  selected,
+                                                  setSelected
+                                              }) => {
     const [isShowPopup, setIsShowPopup] = useState<boolean>(false)
-    const [selected, setSelected] = useState<number>(0)
 
     const sortValues = ['популярности', 'цене', 'алфавиту']
     const sortTitle = sortValues[selected]
@@ -14,7 +21,7 @@ export const Sort = () => {
     const showPopupHandler = () => {
         setIsShowPopup(!isShowPopup)
     }
-    const changeSelectHandler = (index: number) => {
+    const changeSelect = (index: number) => {
         setSelected(index)
         setIsShowPopup(false)
     }
@@ -28,7 +35,7 @@ export const Sort = () => {
             </div>
             {isShowPopup &&
                 <div className="sort__popup">
-                    <Selector onChange={changeSelectHandler} activeIndex={selected} values={sortValues}/>
+                    <Selector onChange={changeSelect} activeIndex={selected} values={sortValues}/>
                 </div>}
         </div>
     );

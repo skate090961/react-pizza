@@ -70,6 +70,10 @@ body {
       flex-direction: column-reverse;
       gap: 30px;
     }
+
+    @media (max-width: 450px) {
+      margin-top: 20px;
+    }
   }
 }
 
