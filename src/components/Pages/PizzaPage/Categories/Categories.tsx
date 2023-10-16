@@ -6,7 +6,7 @@ type CategoriesPropsType = {
     activeCategory: number
 }
 
-export const Categories: React.FC<CategoriesPropsType> = ({
+const Categories: React.FC<CategoriesPropsType> = ({
                                                               activeCategory,
                                                               changeCategory
                                                           }) => {
@@ -18,3 +18,5 @@ export const Categories: React.FC<CategoriesPropsType> = ({
         </div>
     );
 };
+
+export default Categories

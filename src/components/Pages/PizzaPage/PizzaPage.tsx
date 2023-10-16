@@ -1,26 +1,41 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Categories} from "./Categories/Categories";
-import {Sort} from "./Sort/Sort";
 import {PizzaItem} from "./PizzaItem/PizzaItem";
 import {PizzaSkeleton} from "./PizzaItem/PizzaSkeleton";
 import {PizzaType} from "../Pages";
-import sortDesc from "../../../utils/sort/sortDesc";
-import sortAsc from "../../../utils/sort/sortAsc";
 import {Context} from "../../../context/ContextProvider";
 import {IsIncludesValue} from "../../../utils/includes/IsIncludesValue";
+import Categories from "./Categories/Categories";
+import Sort from "./Sort/Sort";
+import {Pagination} from "../../Pagination/Pagination";
 
-export const PizzaPage = ({}) => {
-    //context
+export const PizzaPage = () => {
     const {searchValue} = useContext(Context)
 
-    //state
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [items, setItems] = useState<PizzaType[]>([])
     const [activeCategory, setActiveCategory] = useState<number>(0)
     const [selected, setSelected] = useState<number>(0)
+    const [currentPage, setCurrentPage] = useState<number>(0)
 
+    const changeTitleSort = (value: number) => {
+        switch (value) {
+            case 0:
+                return 'rating'
+            case 1:
+                return 'price'
+            case 2:
+                return 'title'
+            default:
+                return 'rating'
+        }
+    }
+    const LIMIT_ITEM = 4
+    const changedTitleSort = changeTitleSort(selected)
+    const categoryPath = activeCategory > 0 ? `category=${activeCategory}` : ''
+    const paginationPath = `&p=${currentPage + 1}&limit=${LIMIT_ITEM}`
     useEffect(() => {
-        fetch('https://65268109917d673fd76c6aa4.mockapi.io/items')
+        setIsLoading(true)
+        fetch(`https://65268109917d673fd76c6aa4.mockapi.io/items?${categoryPath}&sortBy=${changedTitleSort}${paginationPath}`)
             .then(res => {
                 return res.json()
             })
@@ -29,43 +44,26 @@ export const PizzaPage = ({}) => {
                 setIsLoading(false)
             })
         window.scrollTo(0, 0)
-    }, [])
+    }, [activeCategory, selected, currentPage])
 
-    //categories
-    const filterCategory = (value: number): PizzaType[] => {
-        return value ? items.filter(item => item.category === value) : items
-    }
-    const changedCategoryItems = filterCategory(activeCategory)
     const changeCategory = (value: number) => {
-        filterCategory(activeCategory)
         setActiveCategory(value)
     }
 
-    //sort
-    const changeSort = (value: number): PizzaType[] => {
-        switch (value) {
-            case 0:
-                return sortDesc(changedCategoryItems, 'rating')
-            case 1:
-                return sortDesc(changedCategoryItems, 'price')
-            case 2:
-                return sortAsc(changedCategoryItems, 'title')
-            default:
-                return changedCategoryItems
-        }
-    }
-    const changedSort = changeSort(selected)
-
-    //search
     const filterSearchPizzas = (items: PizzaType[], value: string) => {
         return items.filter(i => IsIncludesValue(i.title, value))
     }
-    const pizzas = filterSearchPizzas(changedSort, searchValue)
+    const pizzas = filterSearchPizzas(items, searchValue)
 
-    //render
     const pizzaItems = pizzas.map(i => <PizzaItem key={i.id} pizza={i}/>)
-    const skeletonItemsList = [...new Array(6)].map((_, index) => <PizzaSkeleton key={index}/>)
+    const skeletonItemsList = [...new Array(LIMIT_ITEM)].map((_, index) => <PizzaSkeleton key={index}/>)
     const itemsList = isLoading ? skeletonItemsList : pizzaItems
+
+    const totalPages = Math.ceil(12 / LIMIT_ITEM)
+
+    const changePage = (value: number) => {
+        setCurrentPage(value)
+    }
 
     return (
         <div className="container">
@@ -74,9 +72,10 @@ export const PizzaPage = ({}) => {
                 <Sort selected={selected} setSelected={setSelected}/>
             </div>
             <h2 className="content__title">Все пиццы</h2>
-            <div className="content__items">
+            <div className={'content__items'}>
                 {itemsList}
             </div>
+            <Pagination totalPages={totalPages} onChangePage={changePage} currentPage={currentPage}/>
         </div>
     );
 };

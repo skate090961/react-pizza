@@ -8,7 +8,7 @@ type SortPropsType = {
     setSelected: (selected: number) => void
 }
 
-export const Sort: React.FC<SortPropsType> = ({
+const Sort: React.FC<SortPropsType> = ({
                                                   selected,
                                                   setSelected
                                               }) => {
@@ -40,3 +40,5 @@ export const Sort: React.FC<SortPropsType> = ({
         </div>
     );
 };
+
+export default Sort

@@ -22,12 +22,14 @@ export const Search = () => {
                 value={searchValue}
                 placeholder={'Поиск пиццы...'}
             />
-            <img
+            { searchValue &&
+                <img
                 onClick={onClickHandler}
                 src={close}
                 alt="close-icon"
                 className={s.close_icon}
             />
+            }
         </div>
     );
 };
