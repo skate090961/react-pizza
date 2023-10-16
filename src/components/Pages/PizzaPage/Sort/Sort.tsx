@@ -4,25 +4,26 @@ import arrowDown from '../../../../assets/img/arrow-down.svg'
 import {Selector} from "../PizzaItem/Selector/Selector";
 
 type SortPropsType = {
-    selected: number
-    setSelected: (selected: number) => void
+    sortId: number
+    changeSortId: (id: number) => void
 }
 
 const Sort: React.FC<SortPropsType> = ({
-                                                  selected,
-                                                  setSelected
+                                           sortId,
+                                           changeSortId
                                               }) => {
     const [isShowPopup, setIsShowPopup] = useState<boolean>(false)
 
     const sortValues = ['популярности', 'цене', 'алфавиту']
-    const sortTitle = sortValues[selected]
+    const sortTitle = sortValues[sortId]
+    console.log(sortId)
     const arrow = isShowPopup ? arrowDown : arrowUp
 
     const showPopupHandler = () => {
         setIsShowPopup(!isShowPopup)
     }
     const changeSelect = (index: number) => {
-        setSelected(index)
+        changeSortId(index)
         setIsShowPopup(false)
     }
 
@@ -35,7 +36,7 @@ const Sort: React.FC<SortPropsType> = ({
             </div>
             {isShowPopup &&
                 <div className="sort__popup">
-                    <Selector onChange={changeSelect} activeIndex={selected} values={sortValues}/>
+                    <Selector onChange={changeSelect} activeIndex={sortId} values={sortValues}/>
                 </div>}
         </div>
     );

@@ -1,21 +1,25 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {PizzaItem} from "./PizzaItem/PizzaItem";
 import {PizzaSkeleton} from "./PizzaItem/PizzaSkeleton";
-import {PizzaType} from "../Pages";
 import {Context} from "../../../context/ContextProvider";
 import {IsIncludesValue} from "../../../utils/includes/IsIncludesValue";
 import Categories from "./Categories/Categories";
 import Sort from "./Sort/Sort";
 import {Pagination} from "../../Pagination/Pagination";
+import {useDispatch, useSelector} from "react-redux";
+import {RootStoreType} from "../../../store/store";
+import {setCategory, setSort} from "../../../store/slices/filterSlice";
+import {PizzasStateType, setPizzas} from "../../../store/slices/pizzasSlice";
 
 export const PizzaPage = () => {
     const {searchValue} = useContext(Context)
 
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const [items, setItems] = useState<PizzaType[]>([])
-    const [activeCategory, setActiveCategory] = useState<number>(0)
-    const [selected, setSelected] = useState<number>(0)
     const [currentPage, setCurrentPage] = useState<number>(0)
+    const items = useSelector<RootStoreType, PizzasStateType[]>(state => state.pizzas)
+    const sortId = useSelector<RootStoreType, number>(state => state.filter.sortId)
+    const categoryId = useSelector<RootStoreType, number>(state => state.filter.categoryId)
+    const dispatch = useDispatch()
 
     const changeTitleSort = (value: number) => {
         switch (value) {
@@ -30,8 +34,8 @@ export const PizzaPage = () => {
         }
     }
     const LIMIT_ITEM = 4
-    const changedTitleSort = changeTitleSort(selected)
-    const categoryPath = activeCategory > 0 ? `category=${activeCategory}` : ''
+    const changedTitleSort = changeTitleSort(sortId)
+    const categoryPath = categoryId > 0 ? `category=${categoryId}` : ''
     const paginationPath = `&p=${currentPage + 1}&limit=${LIMIT_ITEM}`
     useEffect(() => {
         setIsLoading(true)
@@ -40,17 +44,13 @@ export const PizzaPage = () => {
                 return res.json()
             })
             .then(arr => {
-                setItems(arr)
+                dispatch(setPizzas({pizzas: arr}))
                 setIsLoading(false)
             })
         window.scrollTo(0, 0)
-    }, [activeCategory, selected, currentPage])
+    }, [categoryId, sortId, currentPage])
 
-    const changeCategory = (value: number) => {
-        setActiveCategory(value)
-    }
-
-    const filterSearchPizzas = (items: PizzaType[], value: string) => {
+    const filterSearchPizzas = (items: PizzasStateType[], value: string) => {
         return items.filter(i => IsIncludesValue(i.title, value))
     }
     const pizzas = filterSearchPizzas(items, searchValue)
@@ -65,11 +65,18 @@ export const PizzaPage = () => {
         setCurrentPage(value)
     }
 
+    const changeCategoryId = (id: number) => {
+        dispatch(setCategory({id}))
+    }
+    const changeSortId = (id: number) => {
+        dispatch(setSort({id}))
+    }
+
     return (
         <div className="container">
             <div className="content__top">
-                <Categories changeCategory={changeCategory} activeCategory={activeCategory}/>
-                <Sort selected={selected} setSelected={setSelected}/>
+                <Categories categoryId={categoryId} changeCategoryId={changeCategoryId}/>
+                <Sort sortId={sortId} changeSortId={changeSortId}/>
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className={'content__items'}>

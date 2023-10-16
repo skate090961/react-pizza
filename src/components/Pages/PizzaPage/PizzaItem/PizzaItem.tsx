@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {AddButton} from "./AddButton/AddButton";
 import {Selector} from "./Selector/Selector";
-import {PizzaType} from "../../Pages";
+import {PizzasStateType} from "../../../../store/slices/pizzasSlice";
 
 type PizzaItemPropsType = {
-    pizza: PizzaType
+    pizza: PizzasStateType
 }
 
 export const PizzaItem: React.FC<PizzaItemPropsType> = ({pizza}) => {
