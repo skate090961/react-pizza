@@ -8,7 +8,6 @@ import Sort from "./Sort/Sort";
 import {Pagination} from "../../Pagination/Pagination";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStoreType} from "../../../store/store";
-import {setCategory, setSort} from "../../../store/slices/filterSlice";
 import {PizzasStateType, setPizzas} from "../../../store/slices/pizzasSlice";
 
 export const PizzaPage = () => {
@@ -65,18 +64,11 @@ export const PizzaPage = () => {
         setCurrentPage(value)
     }
 
-    const changeCategoryId = (id: number) => {
-        dispatch(setCategory({id}))
-    }
-    const changeSortId = (id: number) => {
-        dispatch(setSort({id}))
-    }
-
     return (
         <div className="container">
             <div className="content__top">
-                <Categories categoryId={categoryId} changeCategoryId={changeCategoryId}/>
-                <Sort sortId={sortId} changeSortId={changeSortId}/>
+                <Categories categoryId={categoryId}/>
+                <Sort sortId={sortId}/>
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className={'content__items'}>

@@ -23,9 +23,8 @@ const pizzasSlice = createSlice({
     reducers: {
         setPizzas(state, action: PayloadAction<PizzasActionType>) {
             const {pizzas} = action.payload
-            console.log(action.payload)
             return [...pizzas]
-        }
+        },
     }
 })
 

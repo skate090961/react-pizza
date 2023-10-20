@@ -2,21 +2,27 @@ import React, {useState} from 'react';
 import arrowUp from '../../../../assets/img/arrow-top.svg'
 import arrowDown from '../../../../assets/img/arrow-down.svg'
 import {Selector} from "../PizzaItem/Selector/Selector";
+import {setSort} from "../../../../store/slices/filterSlice";
+import {useDispatch} from "react-redux";
 
 type SortPropsType = {
     sortId: number
-    changeSortId: (id: number) => void
 }
 
 const Sort: React.FC<SortPropsType> = ({
                                            sortId,
-                                           changeSortId
                                               }) => {
     const [isShowPopup, setIsShowPopup] = useState<boolean>(false)
 
+    const dispatch = useDispatch()
+    const changeSortId = (id: number) => {
+        dispatch(setSort({id}))
+    }
+
+
     const sortValues = ['популярности', 'цене', 'алфавиту']
     const sortTitle = sortValues[sortId]
-    console.log(sortId)
+
     const arrow = isShowPopup ? arrowDown : arrowUp
 
     const showPopupHandler = () => {
